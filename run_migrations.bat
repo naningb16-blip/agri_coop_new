@@ -1,8 +1,9 @@
 @echo off
 set MYSQL=C:\mysql8\bin\mysql.exe
 set H=mysql-1e56207f-dsuanzon2004-8667.e.aivencloud.com
-set P=
+set P=15304
 set U=avnadmin
+set PW=AVNS_vjJM9OSnzunmQELaqjg
 set DB=defaultdb
 set SSL=config/aiven-ca.pem
 
