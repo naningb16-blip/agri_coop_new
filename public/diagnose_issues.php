@@ -19,26 +19,27 @@ echo "</pre>";
 
 // 2. Check stock returns
 echo "<h2>2. Stock Returns Status</h2>";
-$returns = $db->fetchAll("SELECT id, return_number, status, created_at FROM stock_returns ORDER BY id DESC LIMIT 5");
+$returns = $db->fetchAll("SELECT * FROM stock_returns ORDER BY id DESC LIMIT 5");
 echo "<table border='1' cellpadding='5'>";
-echo "<tr><th>ID</th><th>Return #</th><th>Status</th><th>Created</th><th>Has Approval?</th></tr>";
+echo "<tr><th>ID</th><th>Status</th><th>Created</th><th>Has Approval?</th></tr>";
 foreach ($returns as $r) {
     $approval = $db->fetchOne("SELECT id, status FROM approval_requests WHERE module='stock_return' AND reference_id=?", [$r['id']], 'i');
     $hasApproval = $approval ? "Yes (ID: {$approval['id']}, Status: {$approval['status']})" : "<span class='error'>NO</span>";
-    echo "<tr><td>{$r['id']}</td><td>{$r['return_number']}</td><td>{$r['status']}</td><td>{$r['created_at']}</td><td>{$hasApproval}</td></tr>";
+    echo "<tr><td>{$r['id']}</td><td>{$r['status']}</td><td>{$r['created_at']}</td><td>{$hasApproval}</td></tr>";
 }
 echo "</table>";
 
 // 3. Check sales orders
 echo "<h2>3. Sales Orders Status</h2>";
-$orders = $db->fetchAll("SELECT id, so_number, status, payment_status, created_at FROM sales_orders ORDER BY id DESC LIMIT 5");
+$orders = $db->fetchAll("SELECT * FROM sales_orders ORDER BY id DESC LIMIT 5");
 echo "<table border='1' cellpadding='5'>";
 echo "<tr><th>ID</th><th>SO #</th><th>Status</th><th>Payment</th><th>Created</th><th>Has Approval?</th></tr>";
 foreach ($orders as $o) {
     $approval = $db->fetchOne("SELECT id, status FROM approval_requests WHERE module='sales_order' AND reference_id=?", [$o['id']], 'i');
     $hasApproval = $approval ? "Yes (ID: {$approval['id']}, Status: {$approval['status']})" : "<span class='error'>NO</span>";
     $paymentStatus = $o['payment_status'] ?? 'unpaid';
-    echo "<tr><td>{$o['id']}</td><td>{$o['so_number']}</td><td>{$o['status']}</td><td>{$paymentStatus}</td><td>{$o['created_at']}</td><td>{$hasApproval}</td></tr>";
+    $soNumber = $o['so_number'] ?? $o['order_number'] ?? 'N/A';
+    echo "<tr><td>{$o['id']}</td><td>{$soNumber}</td><td>{$o['status']}</td><td>{$paymentStatus}</td><td>{$o['created_at']}</td><td>{$hasApproval}</td></tr>";
 }
 echo "</table>";
 
@@ -102,7 +103,8 @@ $testOrder = $db->fetchOne("SELECT * FROM sales_orders WHERE status='approved' L
 if ($testOrder) {
     echo "<pre>";
     echo "Order ID: {$testOrder['id']}\n";
-    echo "SO Number: {$testOrder['so_number']}\n";
+    $soNumber = $testOrder['so_number'] ?? $testOrder['order_number'] ?? 'N/A';
+    echo "SO Number: {$soNumber}\n";
     echo "Status: {$testOrder['status']}\n";
     echo "Payment Status: " . ($testOrder['payment_status'] ?? 'NOT SET') . "\n";
     
