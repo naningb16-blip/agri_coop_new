@@ -5,16 +5,18 @@ services:
     plan: free
     envVars:
       - key: DB_HOST
-        value: REPLACE_WITH_RAILWAY_MYSQLHOST
+        sync: false
       - key: DB_PORT
-        value: "REPLACE_WITH_RAILWAY_MYSQLPORT"
+        sync: false
       - key: DB_USER
-        value: REPLACE_WITH_RAILWAY_MYSQLUSER
+        sync: false
       - key: DB_PASS
-        value: REPLACE_WITH_RAILWAY_MYSQLPASSWORD
+        sync: false
       - key: DB_NAME
-        value: REPLACE_WITH_RAILWAY_MYSQLDATABASE
+        sync: false
       - key: DB_SSL_CA
-        value: ""
+        value: /opt/render/project/src/config/aiven-ca.pem
       - key: BASE_URL
-        value: https://agri-coop.onrender.com
+        sync: false
+      - key: APP_NAME
+        value: FARCO
