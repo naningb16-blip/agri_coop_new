@@ -25,7 +25,7 @@ echo "<p>Found " . count($ordersWithoutApproval) . " sales orders without approv
 $created = 0;
 foreach ($ordersWithoutApproval as $order) {
     // Create approval request
-    $db->insert(
+    $requestId = $db->insert(
         "INSERT INTO approval_requests (module, reference_type, reference_id, title, description, requested_by, status, current_step, created_at) 
          VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW())",
         [
@@ -40,8 +40,6 @@ foreach ($ordersWithoutApproval as $order) {
         ],
         'ssissssi'
     );
-    
-    $requestId = $db->getInsertId();
     
     // Create approval step
     $stepStatus = ($order['status'] === 'approved' || $order['status'] === 'delivered') ? 'approved' : 'pending';
@@ -95,7 +93,7 @@ foreach ($stockReturns as $return) {
         }
     } else {
         // Create approval request
-        $db->insert(
+        $requestId = $db->insert(
             "INSERT INTO approval_requests (module, reference_type, reference_id, title, description, requested_by, status, current_step, created_at) 
              VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW())",
             [
@@ -110,8 +108,6 @@ foreach ($stockReturns as $return) {
             ],
             'ssissssi'
         );
-        
-        $requestId = $db->getInsertId();
         
         // Create approval step
         $db->insert(
