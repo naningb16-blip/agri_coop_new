@@ -6,5 +6,5 @@ define('DB_USER',   getenv('DB_USER')   ?: 'avnadmin');
 define('DB_PASS',   getenv('DB_PASS')   ?: 'AVNS_vjJM9OSnzunmQELaqjg');
 define('DB_NAME',   getenv('DB_NAME')   ?: 'defaultdb');
 define('DB_SSL_CA', getenv('DB_SSL_CA') ?: '/var/www/html/config/aiven-ca.pem');
-define('BASE_URL',  getenv('BASE_URL')  ?: 'https://agri-coop.onrender.com');
+define('BASE_URL',  getenv('BASE_URL')  ?: 'https://agri-coop-new.onrender.com');
 define('APP_NAME',  'FARCO');
