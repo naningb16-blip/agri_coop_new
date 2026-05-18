@@ -1,0 +1,6 @@
+# Local environment only
+public/uploads/documents/*
+!public/uploads/documents/.gitkeep
+
+# Keep CA cert out of git if preferred (optional)
+# config/aiven-ca.pem

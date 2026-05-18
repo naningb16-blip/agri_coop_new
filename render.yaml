@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: agri-coop
+    runtime: docker
+    plan: free
+    envVars:
+      - key: DB_HOST
+        value: REPLACE_WITH_RAILWAY_MYSQLHOST
+      - key: DB_PORT
+        value: "REPLACE_WITH_RAILWAY_MYSQLPORT"
+      - key: DB_USER
+        value: REPLACE_WITH_RAILWAY_MYSQLUSER
+      - key: DB_PASS
+        value: REPLACE_WITH_RAILWAY_MYSQLPASSWORD
+      - key: DB_NAME
+        value: REPLACE_WITH_RAILWAY_MYSQLDATABASE
+      - key: DB_SSL_CA
+        value: ""
+      - key: BASE_URL
+        value: https://agri-coop.onrender.com
