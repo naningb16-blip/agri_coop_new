@@ -44,17 +44,15 @@ foreach ($ordersWithoutApproval as $order) {
     // Create approval step
     $stepStatus = ($order['status'] === 'approved' || $order['status'] === 'delivered') ? 'approved' : 'pending';
     $db->insert(
-        "INSERT INTO approval_steps (request_id, step_order, approver_role, status, acted_by, acted_at) 
-         VALUES (?, ?, ?, ?, ?, ?)",
+        "INSERT INTO approval_steps (request_id, step_order, approver_role, status) 
+         VALUES (?, ?, ?, ?)",
         [
             $requestId,
             1,
             'gm',
-            $stepStatus,
-            $stepStatus === 'approved' ? 1 : null,
-            $stepStatus === 'approved' ? date('Y-m-d H:i:s') : null
+            $stepStatus
         ],
-        'iissis'
+        'iiss'
     );
     
     $created++;
