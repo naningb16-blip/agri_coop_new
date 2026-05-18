@@ -44,15 +44,16 @@ foreach ($ordersWithoutApproval as $order) {
     // Create approval step
     $stepStatus = ($order['status'] === 'approved' || $order['status'] === 'delivered') ? 'approved' : 'pending';
     $db->insert(
-        "INSERT INTO approval_steps (request_id, step_order, approver_role, status) 
-         VALUES (?, ?, ?, ?)",
+        "INSERT INTO approval_steps (request_id, step_order, approver_role, label, status) 
+         VALUES (?, ?, ?, ?, ?)",
         [
             $requestId,
             1,
             'gm',
+            'GM Approval',
             $stepStatus
         ],
-        'iiss'
+        'iisss'
     );
     
     $created++;
@@ -80,10 +81,10 @@ foreach ($stockReturns as $return) {
         if (empty($steps)) {
             // Create missing step
             $db->insert(
-                "INSERT INTO approval_steps (request_id, step_order, approver_role, status) 
-                 VALUES (?, ?, ?, ?)",
-                [$return['approval_id'], 1, 'gm', 'pending'],
-                'iiss'
+                "INSERT INTO approval_steps (request_id, step_order, approver_role, label, status) 
+                 VALUES (?, ?, ?, ?, ?)",
+                [$return['approval_id'], 1, 'gm', 'GM Approval', 'pending'],
+                'iisss'
             );
             echo "<span class='ok'>✅ Created approval step for stock return #{$return['id']}</span><br>";
         } else {
@@ -109,10 +110,10 @@ foreach ($stockReturns as $return) {
         
         // Create approval step
         $db->insert(
-            "INSERT INTO approval_steps (request_id, step_order, approver_role, status) 
-             VALUES (?, ?, ?, ?)",
-            [$requestId, 1, 'gm', 'pending'],
-            'iiss'
+            "INSERT INTO approval_steps (request_id, step_order, approver_role, label, status) 
+             VALUES (?, ?, ?, ?, ?)",
+            [$requestId, 1, 'gm', 'GM Approval', 'pending'],
+            'iisss'
         );
         
         echo "<span class='ok'>✅ Created approval for stock return #{$return['id']}</span><br>";
